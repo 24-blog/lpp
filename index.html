@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>構造的暴力論の論理的解体</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$']],
+    displayMath: [['$$', '$$']],
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+
+  :root {
+    --bg:#f7f7f5;
+    --bg2:#f1eee8;
+    --bg3:#ffffff;
+    --gold:#8a6d3b;
+    --gold-dim:#b99a6a;
+    --gold-pale:#e8d9be;
+    --text:#2e2b27;
+    --text-dim:#77706a;
+    --border:#ddd9d2;
+    --accent:#3f3420;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  body{
+    background:linear-gradient(180deg,#fcfcfb 0%,#f4f3ef 100%);
+    color:var(--text);
+    font-family:'Noto Serif JP',serif;
+    font-weight:300;
+    line-height:2;
+    font-size:16px;
+  }
+
+  .article-wrap{
+    max-width:880px;
+    margin:0 auto;
+    padding:90px 36px 140px;
+  }
+
+  .article-header{
+    margin-bottom:72px;
+    padding-left:0;
+    border:none;
+  }
+
+  .article-header::before{
+    content:"";
+    display:block;
+    width:84px;
+    height:3px;
+    background:var(--gold);
+    margin-bottom:24px;
+  }
+
+  .article-label,
+  .article-meta,
+  h3,
+  .note,
+  .conclusion-label,
+  .label{
+    font-family:'DM Mono',monospace;
+  }
+
+  .article-label{
+    color:var(--gold);
+    letter-spacing:.18em;
+    margin-bottom:18px;
+  }
+
+  h1{
+    font-size:34px;
+    line-height:1.55;
+    color:var(--accent);
+    margin-bottom:22px;
+  }
+
+  .article-meta{
+    color:var(--text-dim);
+    font-size:12px;
+  }
+
+  p{margin-bottom:1.9em;}
+
+  h2{
+    font-size:18px;
+    color:var(--accent);
+    margin:72px 0 24px;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--border);
+  }
+
+  h3{
+    font-size:13px;
+    color:var(--gold);
+    letter-spacing:.08em;
+    margin:42px 0 16px;
+  }
+
+  .math-block{
+    background:#fff;
+    border:none;
+    border-left:4px solid var(--gold);
+    border-radius:14px;
+    padding:32px;
+    margin:32px 0;
+    overflow-x:auto;
+    box-shadow:0 10px 28px rgba(0,0,0,.06);
+  }
+
+  .math-block .label{
+    color:var(--gold);
+    margin-bottom:18px;
+    letter-spacing:.15em;
+    font-size:11px;
+  }
+
+  .def-table{
+    width:100%;
+    border-collapse:collapse;
+    margin:28px 0;
+    background:#fff;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 6px 20px rgba(0,0,0,.05);
+  }
+
+  .def-table td{
+    padding:14px 18px;
+    border-bottom:1px solid var(--border);
+  }
+
+  .def-table td:first-child{
+    width:90px;
+    color:var(--gold);
+  }
+
+  blockquote{
+    background:rgba(255,255,255,.6);
+    border-left:4px solid var(--gold-dim);
+    padding:18px 24px;
+    border-radius:8px;
+    margin:28px 0;
+  }
+
+  .conclusion-block{
+    background:linear-gradient(135deg,#ffffff,#f6f2ea);
+    border-left:6px solid var(--gold);
+    border-radius:18px;
+    padding:36px;
+    margin:56px 0;
+    box-shadow:0 12px 32px rgba(0,0,0,.06);
+  }
+
+  .article-footer{
+    margin-top:96px;
+    padding-top:28px;
+    border-top:1px solid var(--border);
+    color:var(--text-dim);
+    font-size:12px;
+  }
+
+  .MJX-TEX{color:var(--accent);}
+
+</style>
+</head>
+<body>
+<div class="article-wrap">
+
+  <header class="article-header">
+    <div class="article-label">Logic / Political Philosophy</div>
+    <h1>「構造的暴力」論の論理的解体<br>——無限定相対化の形式化と爆発律的帰結</h1>
+  </header>
+
+  <p>
+    民主主義社会における実力行使を擁護する論法には、繰り返し現れる型がある。「構造的暴力」の援用がそれだ。本稿ではこの論法を形式化し、その内部矛盾を示す。
+  </p>
+
+  <h2>一　問いの設定</h2>
+
+  <p>
+    出発点となる問いはこうだ。過酷な圧政も生命を脅かす急迫した社会情勢も存在しない、成熟した民主主義社会において——実力行使を伴う政治行動に子供を巻き込み、子供が命を落とす事例に対して、民主主義が下したネガティブ評価を非難し、評価者へ責任転嫁することは、テロリストの自己正当化ロジックと同型ではないか。
+  </p>
+
+  <p>
+    これは閉じた系における問いである。条件を「成熟した民主主義社会」と明示することで、論証の対象を限定している。ところが、この問いに対して繰り返し投入される反論がある。
+  </p>
+
+  <blockquote>
+    「形式的には民主主義や法治国家の体裁をとっていても、貧困、格差、差別、環境破壊などが放置されている場合、構造的暴力が存在する社会と評価し得る。」
+  </blockquote>
+
+  <p>
+    これが「構造的暴力」論の典型的な用法である。一見もっともらしいが、その論理構造は致命的な問題を抱えている。
+  </p>
+
+  <h2>二　形式化</h2>
+
+  <h3>// 定義</h3>
+
+  <table class="def-table">
+    <tr><td>$D$</td><td>成熟した民主主義社会が成立している</td></tr>
+    <tr><td>$C$</td><td>構造的暴力が存在する</td></tr>
+    <tr><td>$A$</td><td>実力行使に子供を巻き込む政治行動が正当化される</td></tr>
+    <tr><td>$S$</td><td>任意の社会</td></tr>
+  </table>
+
+  <h3>// 問いの論証（閉じた系）</h3>
+
+  <div class="math-block">
+    <div class="label">Premise</div>
+    $$D \Rightarrow \neg A \quad \cdots (1)$$
+    $$D \quad \cdots (2)$$
+    $$\therefore \neg A \quad \cdots (3) \qquad \text{Modus Ponens: (1)(2)}$$
+  </div>
+
+  <p>
+    (3)が結論である。これで論証は完結している。問いの射程は $D$ という条件の内部に限定されており、外部の変数を要しない。
+  </p>
+
+  <h3>// 反論の形式化</h3>
+
+  <div class="math-block">
+    <div class="label">Counterargument</div>
+    $$D \not\Rightarrow \neg C \quad \cdots (4)$$
+    $$\forall S\, (C(S) \Rightarrow A(S)) \quad \cdots (5) \qquad \text{※ 暗黙の公理として密輸入}$$
+    $$D \wedge C \Rightarrow A \quad \cdots (6) \qquad \text{（反論側が導入する追加条件）}$$
+  </div>
+
+  <p>
+    反論の構造は(4)から(6)への移行である。民主主義社会であっても構造的暴力は存在し得る$(4)$、構造的暴力があれば実力行使は正当化される$(5)$、ゆえに民主主義社会でも実力行使は正当化され得る$(6)$。
+  </p>
+
+  <h2>三　二つの致命的問題</h2>
+
+  <h3>// 問題 I：論証対象のすり替え</h3>
+
+  <div class="math-block">
+    <div class="label">Non-Sequitur</div>
+    $$\text{問い：} \quad D \vdash \neg A$$
+    $$\text{反論：} \quad D \wedge C \vdash A$$
+    $$D \neq D \wedge C$$
+  </div>
+
+  <p>
+    問いが設定した命題と、反論が論じている命題は異なる。$D$ という単一条件に、外部から $C$ を付加して $D \wedge C$ にすり替えている。これは論理学でいう論点相違（Ignoratio elenchi）の一形態である。
+  </p>
+
+  <h3>// 問題 II：未証明公理の密輸入と爆発律的帰結</h3>
+
+  <p>
+    さらに深刻なのは $(5)$ の扱いである。$C \Rightarrow A$——「構造的暴力が存在するならば実力行使は正当化される」——はこの論法の中で一度も証明されていない。暗黙の公理として前提に組み込まれている。
+  </p>
+
+  <p>
+    この公理を認めると、次の帰結が生じる。
+  </p>
+
+  <div class="math-block">
+    <div class="label">Reductio ad Absurdum / Universalization</div>
+    $$\text{「構造的暴力が存在しない社会」は実現不能}$$
+    $$\Downarrow$$
+    $$\forall\, S,\; C(S) \quad \cdots (7)$$
+    $$\forall S\, (C(S) \Rightarrow A(S)) \quad \cdots (5)$$
+    $$\therefore \forall S,\; A(S) \quad \cdots (8)$$
+    $$\Downarrow$$
+    $$(8) \text{ は明らかに不合理} \quad \Rightarrow \quad \bot$$
+  </div>
+
+  <p>
+    貧困・格差・差別・環境破壊がゼロの社会は存在しない。ゆえに$(7)$——すべての社会において $C$ が成立する——は実質的に真となる。これに$(5)$を適用すると、$(8)$——すべての社会で実力行使が正当化される——が導かれる。これは不合理であり、論証全体が矛盾に帰着する。
+  </p>
+
+  <p>
+    「構造的暴力」は反証不能な概念として運用されている。これが無限定相対化の正体である。
+  </p>
+
+  <h2>四　立憲的正当性という見落とし</h2>
+
+  <p>
+    この種の反論が見落としている、より根本的な問題がある。民主主義の正当性は二層構造をなしている。
+  </p>
+
+  <div class="math-block">
+    <div class="label">Constitutional Legitimacy</div>
+    $$\text{第一層：多数決で決定する} \quad \cdots \text{（個別の決定）}$$
+    $$\text{第二層：多数決というルール自体を国民が立憲した} \quad \cdots \text{（メタ的選択）}$$
+  </div>
+
+  <p>
+    活動家理論が攻撃するのは第一層の結果——特定の政策決定への不満——である。しかし第二層、すなわち多数決というゲームのルール自体を国民が自ら選択したという事実に対する応答を持っていない。
+  </p>
+
+  <p>
+    さらに、自力救済の正当化論理は「代替手段が存在しない」ことを必要条件とする。しかし民主主義は定義上、代替手段の行使そのものである。
+  </p>
+
+  <div class="math-block">
+    <div class="label">Contradiction</div>
+    $$\text{民主主義} \equiv \text{代替手段の行使}$$
+    $$\text{実力行使の正当化条件} \equiv \text{代替手段の不存在}$$
+    $$\therefore \text{政治活動中の実力行使} \Rightarrow \text{矛盾}$$
+  </div>
+
+  <div class="conclusion-block">
+    <div class="conclusion-label">結論</div>
+    <p>「構造的暴力」論は、検証不能な概念を万能鍵として用いることで、いかなる社会における実力行使をも正当化できる構造を持つ。</p>
+    <p>これは中立の外形をとった一方向的な免責装置である。その論理的帰結は $\forall S,\; A(S)$——すべての社会で実力行使が正当化される——という不合理に至る。</p>
+    <p>民主主義の批判者は、第一層（多数決の結果）への不満を、第二層（立憲的正当性）への攻撃と混同している。この混同を解かない限り、論証は閉じない。</p>
+  </div>
+
+</div>
+</body>
+</html>
